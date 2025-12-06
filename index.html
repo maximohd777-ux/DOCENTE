@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Indicadores Hoteleros | Contabilidad Hotelera</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0d2c4d; /* Azul Marino Profundo - Corporativo */
+            --secondary-color: #bfa05a; /* Dorado - Lujo Hotelero */
+            --accent-color: #1a73e8; /* Azul Brillante - Interacción */
+            --bg-light: #f8f9fa;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+        }
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(13, 44, 77, 0.9), rgba(13, 44, 77, 0.8)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .hero h1 { color: white; font-size: 3.5rem; }
+        .hero .subtitle { color: var(--secondary-color); font-size: 1.2rem; font-weight: 300; margin-top: 10px; }
+
+        /* Section Styling */
+        section { padding: 60px 0; border-bottom: 1px solid #e9ecef; }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* KPI Cards */
+        .kpi-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border-left: 5px solid var(--secondary-color);
+        }
+        .kpi-card:hover { transform: translateY(-5px); }
+        .formula-box {
+            background-color: #eef2f7;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            color: var(--primary-color);
+            border: 1px dashed var(--primary-color);
+        }
+        .example-box {
+            background-color: #fff8e1; /* Light yellow */
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            border-left: 4px solid #ffc107;
+        }
+        .badge-controller {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            background-color: #f1f4f8;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #d1d9e6;
+        }
+        .dash-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .dash-value { font-size: 2rem; font-weight: bold; color: var(--primary-color); }
+        .dash-label { font-size: 0.9rem; color: #666; text-transform: uppercase; }
+        .trend-up { color: green; }
+        .trend-down { color: red; }
+
+        /* Calculator */
+        .calc-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .result-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        footer .author { color: var(--secondary-color); }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-hotel me-2"></i>Contabilidad Hotelera</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#habitaciones">Habitaciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#costos">Costos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#fb">A&B</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#calculadora">Calculadora</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Guía Profesional de Indicadores</h1>
+            <h2 class="h4 text-light">Para Contabilidad y Finanzas Hoteleras</h2>
+            <div class="subtitle">Creado para estudiantes por Máximo Mercado</div>
+            <a href="#intro" class="btn btn-outline-light btn-lg mt-4">Comenzar Aprendizaje</a>
+        </div>
+    </header>
+
+    <section id="intro">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2 class="mb-4">El Rol del Controller Financiero</h2>
+                    <p class="lead">El Controller no solo "cuenta dinero". Es el guardián de la rentabilidad del hotel.</p>
+                    <p>Su función principal es monitorear la salud operativa diaria, asegurar que los costos estén alineados con los ingresos y proporcionar datos precisos para la toma de decisiones estratégicas. Esta guía te enseñará exactamente qué mira un controller cada día.</p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Controller working" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard" class="bg-light">
+        <div class="container">
+            <h2 class="section-title">Lo que revisa un Controller cada mañana</h2>
+            <p class="text-center mb-5">Antes del café, el Controller revisa el "Flash Report" del día anterior. Así se ve un resumen típico:</p>
+            
+            <div class="dashboard-container">
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="dash-card">
+                            <div class="dash-label">Ocupación (Ayer)</div>
+                            <div class="dash-value">78.5%</div>
+                            <small class="trend-up"><i class="fas fa-arrow-up"></i> vs Budget</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="dash-card">
+                            <div class="dash-label">ADR</div>
+                            <div class="dash-value">$145.00</div>
+                            <small class="trend-up"><i class="fas fa-arrow-up"></i> +$5 vs LY</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="dash-card">
+                            <div class="dash-label">RevPAR</div>
+                            <div class="dash-value">$113.82</div>
+                            <small class="text-muted">On Target</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="dash-card">
+                            <div class="dash-label">Payroll Ratio</div>
+                            <div class="dash-value text-danger">32%</div>
+                            <small class="trend-down"><i class="fas fa-exclamation-triangle"></i> Alerta Alta</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dash-card">
+                            <div class="dash-label">Ingresos Totales (Día)</div>
+                            <div class="dash-value">RD$ 850,000</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dash-card">
+                            <div class="dash-label">Costo Mercancía (A&B)</div>
+                            <div class="dash-value">28.5%</div>
+                            <small class="text-success">Controlado</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dash-card">
+                            <div class="dash-label">GOP (Acumulado Mes)</div>
+                            <div class="dash-value">RD$ 4.2M</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="habitaciones">
+        <div class="container">
+            <h2 class="section-title">A. Indicadores de Habitaciones (Core)</h2>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="kpi-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4>ADR - Average Daily Rate</h4>
+                            <span class="badge-controller">Vital</span>
+                        </div>
+                        <div class="formula-box">ADR = Ingresos Habitaciones / Habitaciones Vendidas</div>
+                        <p><strong>Explicación:</strong> Muestra el precio promedio al que se vendió cada habitación ocupada. No toma en cuenta las vacías.</p>
+                        <p><strong>Visión Controller:</strong> Mide la efectividad de la estrategia de precios.</p>
+                        <div class="example-box">
+                            <strong>Ejemplo Real:</strong><br>
+                            Ingresos del día: RD$ 250,000<br>
+                            Habitaciones vendidas: 50<br>
+                            ADR = 250,000 / 50 = <strong>RD$ 5,000</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="kpi-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4>RevPAR - Rev. per Available Room</h4>
+                            <span class="badge-controller">El Rey de los KPIs</span>
+                        </div>
+                        <div class="formula-box">RevPAR = Ingresos Totales Hab. / Habitaciones Disponibles</div>
+                        <p><strong>Explicación:</strong> Mide cuánto dinero produce cada habitación del hotel, esté ocupada o no. Combina ocupación y precio.</p>
+                        <div class="example-box">
+                            <strong>Ejemplo Real:</strong><br>
+                            Ingresos: RD$ 125,000<br>
+                            Habitaciones Disponibles (Inventario total): 200<br>
+                            RevPAR = 125,000 / 200 = <strong>RD$ 625</strong>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-lg-6">
+                    <div class="kpi-card">
+                        <h4>Ocupación (%)</h4>
+                        <div class="formula-box">Ocupación = (Habitaciones Vendidas / Hab. Disponibles) × 100</div>
+                        <p><strong>Explicación:</strong> Porcentaje físico de uso del hotel.</p>
+                        <div class="example-box">
+                            <strong>Ejemplo:</strong> 150 habitaciones ocupadas de 200 totales.<br>
+                            (150 / 200) * 100 = <strong>75%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="kpi-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4>GOPPAR</h4>
+                            <span class="badge-controller">Rentabilidad</span>
+                        </div>
+                        <div class="formula-box">GOPPAR = (GOP Total) / Habitaciones Disponibles</div>
+                        <p><strong>Explicación:</strong> Utilidad Bruta Operativa por habitación disponible. Considera todos los ingresos menos los gastos operativos.</p>
+                        <p><strong>Visión Controller:</strong> Indica si la operación es rentable más allá de solo vender cuartos.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-12">
+                    <div class="row">
+                         <div class="col-md-6">
+                            <div class="kpi-card">
+                                <h4>TRevPAR (Total Revenue)</h4>
+                                <div class="formula-box">Ingresos Totales (Hab+A&B+Otros) / Hab. Disponibles</div>
+                                <p>Mide la capacidad del hotel para generar ingresos de todas las fuentes por cada habitación disponible.</p>
+                            </div>
+                         </div>
+                         <div class="col-md-6">
+                            <div class="kpi-card">
+                                <h4>NRevPAR (Net Revenue)</h4>
+                                <div class="formula-box">(Ingresos Hab - Costos Distribución) / Hab. Disponibles</div>
+                                <p>Ingreso neto real descontando comisiones de OTAs (Booking, Expedia).</p>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="costos">
+        <div class="container">
+            <h2 class="section-title">B. Control de Costos y Eficiencia</h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="kpi-card h-100">
+                        <h4>Payroll Ratio</h4>
+                        <div class="formula-box">(Gasto Nómina / Ingresos Totales) × 100</div>
+                        <p><strong>Benchmark:</strong> 25% - 35% (varía por lujo).</p>
+                        <p><strong>Controller:</strong> Si sube, hay que reducir horas extra o ajustar plantillas a la ocupación baja.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="kpi-card h-100">
+                        <h4>CPOR (Cost Per Occupied Room)</h4>
+                        <div class="formula-box">Gastos Operativos Hab. / Hab. Vendidas</div>
+                        <p>Cuanto cuesta atender a un huésped (limpieza, amenidades, lavandería).</p>
+                        <div class="example-box">Gastos: $5,000 / 200 Habs = <strong>$25 por hab.</strong></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="kpi-card h-100">
+                        <h4>EBITDA Hotelero</h4>
+                        <div class="formula-box">Ingresos - Gastos (antes de intereses, impuestos, dep, amort)</div>
+                        <p>El indicador final de salud financiera operativa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fb" class="bg-white">
+        <div class="container">
+            <h2 class="section-title">C. Indicadores de Alimentos y Bebidas (A&B)</h2>
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle"></i> Un controller vigila A&B estrictamente porque es donde más fugas de dinero ocurren.
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Indicador</th>
+                            <th>Fórmula</th>
+                            <th>Objetivo Típico</th>
+                            <th>Ejemplo Numérico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Food Cost (%)</strong></td>
+                            <td>(Costo Comida / Ventas Comida) × 100</td>
+                            <td>25% - 32%</td>
+                            <td>Costo: RD$30,000 / Venta: RD$100,000 = <strong>30%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beverage Cost (%)</strong></td>
+                            <td>(Costo Bebida / Ventas Bebida) × 100</td>
+                            <td>18% - 22%</td>
+                            <td>El licor tiene márgenes más altos que la comida.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RevPASH</strong></td>
+                            <td>Ingresos A&B / (Asientos × Horas apertura)</td>
+                            <td>Maximizar</td>
+                            <td>Ingreso por asiento disponible por hora.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Costo por Cubierto</strong></td>
+                            <td>Costo Total A&B / Nro. Clientes Servidos</td>
+                            <td>Control</td>
+                            <td>Ayuda a fijar precios de menú.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="kpi-card">
+                        <h4>CMV (Costo Mercancía Vendida)</h4>
+                        <div class="formula-box">Inv. Inicial + Compras - Inv. Final</div>
+                        <p>Calcula cuánto inventario realmente se consumió (o desapareció) en el periodo.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="kpi-card">
+                        <h4>Rotación de Inventarios</h4>
+                        <div class="formula-box">Costo A&B / Inventario Promedio</div>
+                        <p>Mide qué tan rápido vendemos el stock. Si es bajo, tenemos capital estancado o comida expirando.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculadora" style="background-color: var(--primary-color); color: white;">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Calculadora Interactiva de KPIs</h2>
+            <p class="text-center mb-4">Ingresa los datos del cierre del día para calcular los indicadores automáticamente.</p>
+            
+            <div class="calc-box text-dark">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Habitaciones Disponibles</label>
+                        <input type="number" id="inp_rooms_avail" class="form-control" placeholder="Ej. 200">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Habitaciones Vendidas</label>
+                        <input type="number" id="inp_rooms_sold" class="form-control" placeholder="Ej. 150">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Ingresos Habitaciones ($)</label>
+                        <input type="number" id="inp_rev_rooms" class="form-control" placeholder="Ej. 150000">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Total Gastos Operativos ($)</label>
+                        <input type="number" id="inp_exp_ops" class="form-control" placeholder="Para GOPPAR">
+                    </div>
+                    
+                    <div class="col-md-12 text-center my-3">
+                        <button class="btn btn-warning btn-lg w-100 fw-bold" onclick="calculateKPIs()">CALCULAR INDICADORES</button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row text-center mt-4">
+                    <div class="col-md-3">
+                        <h6>Ocupación</h6>
+                        <div id="res_occ" class="result-display text-primary">- %</div>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>ADR</h6>
+                        <div id="res_adr" class="result-display text-success">-</div>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>RevPAR</h6>
+                        <div id="res_revpar" class="result-display text-dark">-</div>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>GOPPAR</h6>
+                        <div id="res_goppar" class="result-display text-info">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="casos">
+        <div class="container">
+            <h2 class="section-title">Casos Prácticos Reales</h2>
+            <div class="accordion" id="accordionCasos">
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#caso1">
+                            <strong class="text-primary">Caso #1: Baja Ocupación pero Alto ADR</strong>
+                        </button>
+                    </h2>
+                    <div id="caso1" class="accordion-collapse collapse show" data-bs-parent="#accordionCasos">
+                        <div class="accordion-body">
+                            <p><strong>Contexto:</strong> Un hotel de lujo decide mantener sus tarifas altas (ADR $300) en temporada baja, resultando en solo 30% de ocupación.</p>
+                            <p><strong>Números:</strong> 30 Habs ocupadas de 100. Ingreso: $9,000. RevPAR: $90.</p>
+                            <p><strong>Análisis Controller:</strong> Aunque el ADR se ve bien, el RevPAR ($90) es bajo. Los costos fijos (luz, seguridad) siguen iguales. Probablemente se ganaría más bajando el ADR a $200 para subir la ocupación al 60% (RevPAR subiría a $120).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#caso2">
+                            <strong>Caso #2: Falsas ganancias en A&B (Food Cost alto)</strong>
+                        </button>
+                    </h2>
+                    <div id="caso2" class="accordion-collapse collapse" data-bs-parent="#accordionCasos">
+                        <div class="accordion-body">
+                            <p><strong>Contexto:</strong> El restaurante vendió RD$ 1,000,000 este mes (Récord). El gerente celebra.</p>
+                            <p><strong>La realidad del Controller:</strong> Al revisar el CMV, el costo de comida fue RD$ 450,000. Food Cost = 45%.</p>
+                            <p><strong>Diagnóstico:</strong> Desastroso. El estándar es 30%. Se está perdiendo dinero por desperdicio, robo o porciones muy grandes. No hay ganancia real.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#caso3">
+                            <strong>Caso #3: Impacto del Payroll en Temporada Baja</strong>
+                        </button>
+                    </h2>
+                    <div id="caso3" class="accordion-collapse collapse" data-bs-parent="#accordionCasos">
+                        <div class="accordion-body">
+                            <p><strong>Contexto:</strong> Ocupación cayó al 40%, pero se mantuvo todo el personal fijo y eventuales.</p>
+                            <p><strong>Números:</strong> Ingresos $50,000. Nómina $25,000. Payroll Ratio = 50%.</p>
+                            <p><strong>Recomendación:</strong> Inviable. El Controller debe exigir al gerente operativo enviar vacaciones pendientes, reducir horas extras y ajustar turnos inmediatamente. El Payroll no debe pasar del 35%.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h4>Contabilidad Hotelera</h4>
+            <p>Guía educativa de indicadores clave de gestión.</p>
+            <hr style="border-color: rgba(255,255,255,0.2); width: 50%; margin: 20px auto;">
+            <p class="author">Preparado para estudiantes por <strong>Máximo Mercado</strong></p>
+            <small>&copy; 2023 - Uso Académico Exclusivo</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function calculateKPIs() {
+            // Obtener valores
+            let roomsAvail = parseFloat(document.getElementById('inp_rooms_avail').value) || 0;
+            let roomsSold = parseFloat(document.getElementById('inp_rooms_sold').value) || 0;
+            let revRooms = parseFloat(document.getElementById('inp_rev_rooms').value) || 0;
+            let expOps = parseFloat(document.getElementById('inp_exp_ops').value) || 0;
+
+            // Validaciones básicas
+            if(roomsAvail === 0) {
+                alert("Por favor ingresa habitaciones disponibles (no puede ser 0)");
+                return;
+            }
+
+            // Cálculos
+            let occ = (roomsSold / roomsAvail) * 100;
+            let adr = roomsSold > 0 ? (revRooms / roomsSold) : 0;
+            let revpar = revRooms / roomsAvail;
+            let goppar = (revRooms - expOps) / roomsAvail; // Simplificado usando Ingreso Hab - Gastos
+
+            // Formateo y Mostrar
+            document.getElementById('res_occ').innerText = occ.toFixed(1) + "%";
+            
+            // Formato Moneda
+            const formatter = new Intl.NumberFormat('es-DO', {
+                style: 'currency',
+                currency: 'DOP',
+                minimumFractionDigits: 2
+            });
+
+            document.getElementById('res_adr').innerText = formatter.format(adr);
+            document.getElementById('res_revpar').innerText = formatter.format(revpar);
+            document.getElementById('res_goppar').innerText = formatter.format(goppar);
+        }
+    </script>
+</body>
+</html>
